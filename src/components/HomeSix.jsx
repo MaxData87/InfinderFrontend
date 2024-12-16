@@ -1,8 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Batn from './Batn';
+import FormModalTwo from './FormModalTwo';
 
 const HomeSix = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [hasModalBeenOpened, setHasModalBeenOpened] = useState(false);
+
+    const OpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOpenModal = () => {
+        if (!hasModalBeenOpened) {
+            setIsModalOpen(true);
+            setHasModalBeenOpened(true);
+        }
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            const triggerPoint = 2300;
+
+            if (scrollPosition > triggerPoint && !hasModalBeenOpened) {
+                handleOpenModal();
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [hasModalBeenOpened]);
+
     return (
         <HomeHeroSix>
             <div className='mainOne'>
@@ -14,8 +46,10 @@ const HomeSix = () => {
                 <Batn 
                     marginTop='3rem'
                     text='Join the Waitlist Now'
+                    onClick={OpenModal}
                 />
             </div>
+            <FormModalTwo isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </HomeHeroSix>
     );
 };

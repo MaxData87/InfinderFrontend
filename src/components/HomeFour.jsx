@@ -48,6 +48,10 @@ background-color: #FFFFFF;
     justify-content: space-between;
     gap: 2rem;
 
+    @media (max-width: 1024px) { /* Tablet */
+        padding: 2rem 10rem;
+    }
+
     @media (max-width: 768px) { /* Tablets */
         padding: 2rem 5rem;
         flex-direction: column;
@@ -66,6 +70,10 @@ background-color: #FFFFFF;
     padding: 6rem;
     flex-direction: column;
     gap: 2rem;
+
+    @media (max-width: 1024px) { /* Tablet */
+        padding: 2rem;
+    }
 
     @media (max-width: 768px) { /* Tablets */
         padding: 4rem;

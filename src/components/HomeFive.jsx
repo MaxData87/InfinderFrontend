@@ -88,6 +88,10 @@ background-color: #FDF2E4;
     justify-content: center;
     gap: 1rem;
 
+    @media (max-width: 768px) { /* Tablets */
+        display: none;
+    }
+
     @media (max-width: 480px) { /* Phones */
         display: none; /* Hide imgLine for phone sizes */
     }
@@ -114,8 +118,8 @@ background-color: #FDF2E4;
     margin-left: 3%;
 
     @media (max-width: 768px) { /* Tablets */
-        flex-wrap: wrap;
-        gap: 1rem;
+        flex-direction: column;
+        gap: 2rem;
     }
 
     @media (max-width: 480px) { /* Phones */
@@ -131,7 +135,9 @@ background-color: #FDF2E4;
     max-width: 20%;
 
     @media (max-width: 768px) { /* Tablets */
-        max-width: 30%;
+        text-align: center;
+        align-items: center;
+        max-width: 100%;
     }
 
     @media (max-width: 480px) { /* Phones */

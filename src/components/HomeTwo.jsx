@@ -51,6 +51,10 @@ background-color: #FFFFFF;
     flex-direction: column;
     gap: 1rem;
 
+    @media (max-width: 1024px) { /* Tablet */
+        padding: 2rem 10rem;
+    }
+
     @media (max-width: 768px) { /* Tablets */
         padding: 2rem 5rem;
     }
@@ -83,7 +87,7 @@ background-color: #FFFFFF;
     text-align: center;
 
     @media (max-width: 768px) { /* Tablets */
-        font-size: 16px;
+        font-size: 14px;
     }
 
     @media (max-width: 480px) { /* Phones */
@@ -112,6 +116,11 @@ background-color: #FFFFFF;
     flex-direction: column;
     gap: 0.5rem;
     // align-items: center;
+
+    @media (max-width: 768px) { /* Tablet */
+        text-align: center;
+        align-items: center;
+    }
 
     @media (max-width: 480px) { /* Phones */
         text-align: center;

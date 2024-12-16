@@ -34,7 +34,7 @@ const StyledButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #7357F6;
+    background-color: #0E0E52;
     border: none;
     border-radius: 35px;
     padding: 1rem 4rem;
@@ -55,29 +55,29 @@ const StyledButton = styled.button`
         font-size: ${({ textSize }) => textSize};
         color: ${({ textColor }) => textColor};
         font-family: "DM Sans", sans-serif;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 1px;
     }
 
     /* Responsive Styles */
     @media (max-width: 1024px) {
-        padding: 0.65rem 1.2rem;
+        padding: 1rem 5rem;
         span {
-            font-size: calc(${({ textSize }) => textSize} - 0.1rem);
+            font-size: calc(${({ textSize }) => textSize} - 0rem);
         }
     }
 
     @media (max-width: 768px) {
-        padding: 0.5rem 1rem;
+        padding: 1rem 4rem;
         span {
             font-size: calc(${({ textSize }) => textSize} - 0.2rem);
         }
     }
 
     @media (max-width: 480px) {
-        padding: 0.4rem 0.8rem;
+        padding: 1rem 3rem;
         span {
-            font-size: calc(${({ textSize }) => textSize} - 0.3rem);
+            font-size: calc(${({ textSize }) => textSize} - 0rem);
         }
     }
 `;

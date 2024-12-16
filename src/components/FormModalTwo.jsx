@@ -1,201 +1,392 @@
-// Modal.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import logo from '../assets/images/infinder.png'
-import Avatar from '../assets/images/AvatarCrop.png'
-import { FaUser, FaEnvelope } from 'react-icons/fa'; // Icons for name and email
+import logo from '../assets/images/AvatarCrop.png'
 
 const FormModalTwo = ({ isOpen, onClose }) => {
-    const [isChecked, setIsChecked] = useState(false);
+  if (!isOpen) return null;
 
-    if (!isOpen) return null;
+  const [formData, setFormData] = useState({
+    name: '',
+    businessEmail: '',
+    mobileNo: '',
+    clinicName: '',
+    website: '',
+    printing_materials: [],
+    query: '',
+    isNewsletter: false,
+  });
+  const [message, setMessage] = useState("");
 
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
+  const [errors, setErrors] = useState({
+    mobileNo: '',
+  });
 
-    return (
-        <ModalOverlay>
-            <ModalContent>
-                <button className="closeButton" onClick={onClose}>
-                    &times;
-                </button>
-                <img src={logo} alt='Logo' className='infinderLogo' />
-                <div className='headBox'>
-                    <span className='heading'>Get your free landing page audit now</span>
-                    <img src={Avatar} alt='Avatar' className='AvatarPng' />
-                </div>
-                <span className='desc'>Send me your email and landing page URL and I will review it - no strings attached.</span>
-                <form className='form'>
-                    <div className="inputGroup">
-                        <input type="text" id="name" name="name" required placeholder="Enter your name" />
-                        <FaUser className="inputIcon" />
-                    </div>
-                    <div className="inputGroup">
-                        <input type="email" id="email" name="email" required placeholder="Enter your email" />
-                        <FaEnvelope className="inputIcon" />
-                    </div>
-                    <div className="checkboxContainer">
-                        <input type="checkbox" id="marketing-consent" checked={isChecked} onChange={handleCheckboxChange} />
-                        <label className="marketing-consent">
-                            I allow ConversionLab to send me marketing emails and store my personal data.
-                        </label>
-                    </div>
-                    <button className='submit' type="submit" disabled={!isChecked}>Get my free audit</button>
-                </form>
-            </ModalContent>
-        </ModalOverlay>
-    );
+  const handleChange = (e) => {
+    const { name, value, type, selectedOptions } = e.target;
+    if (type === 'select-multiple') {
+      const selectedValues = Array.from(selectedOptions, option => option.value);
+      setFormData({ ...formData, [name]: selectedValues });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+
+    if (name === 'mobileNumber') {
+      setErrors({ ...errors, mobileNo: '' });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validate mobile number
+    if (!formData.mobileNo) {
+      newErrors.mobileNo = 'Mobile number is required';
+    } else if (!mobileRegex.test(formData.mobileNo)) {
+      newErrors.mobileNo = 'Please enter a valid mobile number';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const mobileRegex = /^[6-9][0-9]{9}$/;
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setMessage("");
+
+    if (validateForm()) {
+      // Proceed with form submission logic
+      if (!formData.isNewsletter) {
+        alert("Please agree to the newsletter to submit the form.");
+        return;
+      }
+
+      const postData = {
+        name: formData.name,
+        businessEmail: formData.businessEmail,
+        mobileNo: formData.mobileNo,
+        website: formData.website,
+        clinicName: formData.clinicName,
+        printing_materials: formData.printing_materials,
+        query: formData.query,
+      };
+
+      try {
+        const response = await fetch('https://api.infinder.in/new-feedback/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(postData),
+        });
+
+        console.log('Response status:', response.status);
+
+        const result = await response.json();
+        console.log('Response result:', result);
+        if (result.success) {
+          setMessage("Thank you! Your data has been submitted.");
+          onClose(); // Close the modal after successful submission
+        } else {
+          setMessage("Failed to submit the data. Please try again.");
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        setMessage("An error occurred while submitting the form.");
+      }
+      console.log('Form submitted successfully!', formData);
+    } else {
+      setMessage("Form valiation failed!");
+    }
+  };
+
+  return (
+    <ModalOverlay>
+      <ModalContent>
+        {/* Left Section */}
+        <LeftSection>
+          <span className='headingLeft'>Register Early on Infinder and Get 30% Off Your Printing Needs!</span>
+          <span className='paraLeft'>
+            Infinder is here to revolutionize healthcare connections—and we’re
+            giving you an exclusive bonus for joining early! Register today and
+            enjoy 30% off your essential printing materials with our printing
+            service partner Printlyte.
+          </span>
+          <ul>
+            <li>☑️ Boost your healthcare connections with ease</li>
+            <li>☑️ Save big on printing costs through Printlyte</li>
+            <li>☑️ Enjoy seamless, dedicated support every step of the way</li>
+          </ul>
+          <div className="testimonial">
+            <img
+              src={logo}
+              alt="Founder"
+              className="founder-img"
+            />
+            <div>
+              <em>I can’t wait to connect!</em>
+              {/* <p><strong>Finge Holden</strong><br />Founder, ConversionLab</p> */}
+            </div>
+          </div>
+        </LeftSection>
+
+        {/* Right Section */}
+        <RightSection>
+          <button className="close-btn" onClick={onClose}>✖</button>
+          <form onSubmit={handleSubmit} method="post" action="#">
+            <label>Your name *</label>
+            <input type="text"
+              name="name"
+              placeholder="Enter your name"
+              value={formData.name}
+              onChange={handleChange}
+              required />
+
+            <label>Business email *</label>
+            <input type="email"
+              name="businessEmail"
+              placeholder="Enter your email"
+              value={formData.businessEmail}
+              onChange={handleChange}
+              required />
+
+            <label>Mobile Number *</label>
+            <input type="number"
+              name="mobileNo"
+              placeholder="Enter your mobile"
+              value={formData.mobileNo}
+              onChange={handleChange}
+              required />
+            {errors.mobileNo && <span style={{ color: 'red' }}>{errors.mobileNo}</span>}
+
+            <label>Lab/Hospital Name *</label>
+            <input type="text"
+              name="clinicName"
+              placeholder="Your company name"
+              value={formData.clinicName}
+              onChange={handleChange}
+              required />
+
+            <label>Printing Materials</label>
+            <select name="printing_materials" onChange={handleChange} value={formData.printing_materials}>
+              <option value="">Select an option</option>
+              <option value="Visiting Card">Visiting Card</option>
+              <option value="Docket Folder">Docket Folder</option>
+              <option value="Envelopes">Envelopes</option>
+              <option value="MRI/CT Scan Bag">MRI/CT Scan Bag</option>
+            </select>
+
+            <label>Enter query if any</label>
+            <input type="text"
+              name="query"
+              placeholder="Describe here"
+              value={formData.query}
+              onChange={handleChange} />
+
+            <div className="newsletter">
+              <input type="checkbox"
+                name="isNewsletter"
+                id="newsletter"
+                checked={formData.isNewsletter}
+                onChange={handleChange}
+                required />
+              <label htmlFor="newsletter">Please add me to your newsletter</label>
+            </div>
+
+            <button type="submit" className="submit-btn">
+              Register Now to Claim Your Discount!
+            </button>
+            <p className="policy">
+              By clicking submit below you agree to our <a href="#">Privacy Policy</a>.
+            </p>
+            
+          </form>
+        </RightSection>
+      </ModalContent>
+    </ModalOverlay>
+  );
 };
 
+export default FormModalTwo;
+
 const ModalOverlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 440px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    position: relative; /* Ensure child elements are positioned relative to this */
-    display: flex;
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 90%;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  flex-direction: row;
+
+  .headingLeft {
+    font-family: "DM Serif Text", serif;
+    font-size: 1.5rem;
+    color: #003F5C;
+  }
+
+  .paraLeft {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #3A5070;
+    text-align: justify;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      margin: 0.5rem 0;
+      color: #555;
+    }
+  }
+
+  @media (max-width: 768px) {
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
 
-    .infinderLogo {
-        height: auto;
-        width: 10rem;
+    .headingLeft {
+      font-size: 1.5rem;
     }
 
-    .headBox {
-        display: flex;
-        align-items: center;
+    .paraLeft {
+      font-size: 0.9rem;
     }
-
-    .heading {
-        font-family: "DM Serif Text", serif;
-        font-size: 36px;
-        color: #2C3146;
-    }
-
-    .AvatarPng {
-        height: auto;
-        width: 10rem;
-    }
-
-    .desc {
-        font-family: "DM Sans", sans-serif;
-        font-size: 16px;
-        color: #2C3146;
-    }
-
-    .form{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-
-        button {
-            font-family: "DM Sans", sans-serif;
-            font-size: 14px;
-            background-color: #007bff;
-            color: white;
-            padding: 0.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-                color: black;
-            }
-        }
-    }
-
-    .inputGroup {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        position: relative;
-
-        input {
-            width: 100%;
-            padding: 0.8rem;
-            font-size: 14px;
-            border: none;
-            border-radius: 4px;
-            padding-left: 2.5rem;
-            box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #f0f0f0;
-            outline: none;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .inputIcon {
-            position: absolute;
-            left: 10px;
-            color: #2C3146;
-            font-size: 16px;
-            pointer-events: none;
-        }
-
-        input:focus {
-            box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(0, 0, 0, 0.15);
-        }
-
-        input::placeholder {
-            font-family: "DM Sans", sans-serif;
-            color: #2C3146;
-            font-size: 14px;
-            padding-left: 0.5rem;
-        }
-    }
-
-    .checkboxContainer {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-
-    .closeButton {
-        position: absolute; /* Relative to the modal content */
-        top: 0px; /* Adjust as needed */
-        right: 10px; /* Adjust as needed */
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: #333;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .marketing-consent{
-        font-family: "DM Sans", sans-serif;
-        color: #2C3146;
-        font-size: 14px;
-    }
-
-    .closeButton:hover {
-        color: #f44336;
-    }
+  }
 `;
 
+const LeftSection = styled.div`
+  flex: 1;
+  background: #fdf0e5;
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
 
-export default FormModalTwo;
+  .testimonial {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+
+    .founder-img {
+      height: auto;
+      width: 6rem;
+    }
+
+    em {
+      color: #7a7a7a;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    .testimonial .founder-img {
+      width: 4rem;
+    }
+  }
+`;
+
+const RightSection = styled.div`
+  flex: 1;
+  padding: 2rem 3rem;
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    top: 0rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-weight: bold;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    select[multiple] {
+      height: auto;
+      min-height: 100px;
+      width: 100%;
+      padding: 5px;
+    }
+
+    input,
+    select {
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 0.8rem;
+    }
+
+    .newsletter {
+      display: flex;
+      input {
+        margin-right: 0.5rem;
+      }
+    }
+
+    .submit-btn {
+      background: #6d4aff;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .policy {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    a {
+      color: #6d4aff;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .close-btn {
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .submit-btn {
+      padding: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .policy {
+      font-size: 0.8rem;
+    }
+  }
+`;

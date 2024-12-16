@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Avatar from '../assets/images/Avatar.png'
 import Batn from './Batn'
 import FormodalOne from './FormodalOne'
-
+ 
 const HomeOne = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -18,7 +18,7 @@ const HomeOne = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsModalOpen(true);
-        }, 5000); // 5000ms = 5 seconds
+        }, 1000); // 1000ms = 1 seconds
 
         return () => clearTimeout(timer); // Clean up the timer on unmount
     }, []);
@@ -57,6 +57,14 @@ background-color: #EFF3FA;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
+
+    @media (min-width: 1440px) { /* Extra Wide Screens */
+        padding: 2rem 20rem; /* Adjust padding for wider screens */
+    }
+
+    @media (min-width: 1920px) { /* Ultra Wide Screens */
+        padding: 2rem 25rem; /* Further adjustment for ultra-wide screens */
+    }
 
     @media (max-width: 1024px) { /* Tablet */
         padding: 2rem 5rem;
@@ -101,16 +109,22 @@ background-color: #EFF3FA;
 }
 .Avatar {
     height: auto;
-    width: 22rem;
+    width: 24rem;
 
     @media (max-width: 1024px) { /* Tablet */
         width: 20rem;
     }
     @media (max-width: 768px) { /* Phone */
-        width: 15rem;
+        width: 100%;
+        height: 20rem;
+        object-fit: cover;
+        object-position: top;
     }
     @media (max-width: 480px) { /* Small Phone */
-        width: 12rem;
+        width: 100%;
+        height: 15rem;
+        object-fit: cover;
+        object-position: top; 
     }
 }
 .buttonContainer {
@@ -119,8 +133,13 @@ background-color: #EFF3FA;
     align-items: center;
     width: fit-content;
 
+    @media (max-width: 1024px) { /* Tablet */
+        margin-top: -1rem;
+        width: auto;
+    }
+
     @media (max-width: 768px) {
-        margin-top: 1rem;
+        margin-top: -2rem;
         width: auto;
     }
 }

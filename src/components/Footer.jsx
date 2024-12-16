@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import icon1 from '../assets/images/instagram.png'
 import icon2 from '../assets/images/facebook.png'
 import icon3 from '../assets/images/youtube.png'
+import logo from '../assets/images/infinder.png'
 
 const Footer = () => {
   return (
@@ -29,12 +30,18 @@ const Footer = () => {
               </div>
             </div>
             <div className='iconBox'>
-              <img src={icon1} className='icon'/>
-              <img src={icon2} className='icon'/>
-              <img src={icon3} className='icon'/>
+              <a href='https://www.instagram.com' target='_blank' rel='noopener noreferrer'>
+                <img src={icon1} className='icon' alt='Instagram' />
+              </a>
+              <a href='https://www.facebook.com/people/Infinder/61566646904225/?mibextid=ZbWKwL' target='_blank' rel='noopener noreferrer'>
+                <img src={icon2} className='icon' alt='Facebook' />
+              </a>
+              <a href='https://www.youtube.com' target='_blank' rel='noopener noreferrer'>
+                <img src={icon3} className='icon' alt='YouTube' />
+              </a>
             </div>
           </div>
-          <span className='footerLogo'>Infinder</span>
+          <img className='footerLogo' src={logo} />
         </div>
       </div>
     </FootComp>
@@ -107,6 +114,11 @@ const FootComp = styled.div`
   .iconBox {
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 480px) {
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
   }
 
   .icon {
@@ -128,10 +140,9 @@ const FootComp = styled.div`
   }
 
   .footerLogo {
-    font-family: "DM Serif Text", serif;
-    font-size: 32px;
-    color: #003F5C;
-    text-align: right;
+    height: auto;
+    width: 8rem;
+    align-self: flex-end;
   }
 
   /* Responsive Design */
@@ -151,7 +162,8 @@ const FootComp = styled.div`
     }
 
     .footerLogo {
-      text-align: center;
+      align-self: center;
+      margin-top: 1.5rem;
     }
 
     .contactBox {
@@ -175,6 +187,11 @@ const FootComp = styled.div`
       font-size: 9px;
     }
 
+    .iconBox{
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
+
     .contact {
       font-size: 14px;
     }
@@ -184,7 +201,8 @@ const FootComp = styled.div`
     }
 
     .footerLogo {
-      font-size: 28px;
+      align-self: center;
+      margin-top: 1.5rem;
     }
   }
 
@@ -204,7 +222,8 @@ const FootComp = styled.div`
     }
 
     .footerLogo {
-      font-size: 24px;
+      align-self: center;
+      margin-top: 1.5rem;
     }
 
     .icon {

@@ -1,56 +1,149 @@
 // Modal.js
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import logo from '../assets/images/infinder.png'
-import Avatar from '../assets/images/AvatarCrop.png'
-import { FaUser, FaEnvelope } from 'react-icons/fa'; // Icons for name and email
+import React, { useState } from "react";
+import styled from "styled-components";
+import logo from "../assets/images/infinder.png";
+import Avatar from "../assets/images/AvatarCrop.png";
+import { FaUser, FaEnvelope } from "react-icons/fa"; // Icons for name and email
+import axios from "axios"; // Import axios for API requests
 
 const FormodalOne = ({ isOpen, onClose }) => {
+    const [formData, setFormData] = useState({
+        name: "",
+        businessEmail: "",
+        clinicName: "",
+    });
     const [isChecked, setIsChecked] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [message, setMessage] = useState("");
 
     if (!isOpen) return null;
+
+    const resetForm = () => {
+        setFormData({
+            name: "",
+            businessEmail: "",
+            clinicName: "",
+        });
+        setIsChecked(false);
+        setMessage(""); // Clear any submission message
+    };
+
+    // Handle input changes
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleClose = () => {
+        resetForm(); // Reset the form
+        onClose();   // Close the modal
+    };
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
 
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setMessage("");
+
+        try {
+            const response = await axios.post(
+                "https://api.infinder.in/new-feedback/mainpage",
+                formData
+            );
+            if (response.data.success) {
+                setMessage("Thank you! Your data has been submitted.");
+            } else {
+                setMessage("Failed to submit the data. Please try again.");
+            }
+        } catch (error) {
+            setMessage("An error occurred while submitting the form.");
+            console.error("API error:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
         <ModalOverlay>
             <ModalContent>
-                <button className="closeButton" onClick={onClose}>
+                <button className="closeButton" onClick={handleClose}>
                     &times;
                 </button>
-                <img src={logo} alt='Logo' className='infinderLogo' />
-                <div className='headBox'>
-                    <span className='heading'>Get your free landing page audit now</span>
-                    <img src={Avatar} alt='Avatar' className='AvatarPng' />
+                <img src={logo} alt="Logo" className="infinderLogo" />
+                <div className="headBox">
+                    <span className="heading">Get your free landing page audit now</span>
+                    <img src={Avatar} alt="Avatar" className="AvatarPng" />
                 </div>
-                <span className='desc'>Send me your email and landing page URL and I will review it - no strings attached.</span>
-                <form className='form'>
+                <span className="desc">
+                    Send me your email and landing page URL and I will review it - no
+                    strings attached.
+                </span>
+                <form className="form" onSubmit={handleSubmit} method="post" action="#">
                     <div className="inputGroup">
-                        <input type="text" id="name" name="name" required placeholder="Enter your name" />
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            placeholder="Enter your name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                        />
                         <FaUser className="inputIcon" />
                     </div>
                     <div className="inputGroup">
-                        <input type="email" id="email" name="email" required placeholder="Enter your email" />
+                        <input
+                            type="email"
+                            id="businessEmail"
+                            name="businessEmail"
+                            required
+                            placeholder="Enter your email"
+                            value={formData.businessEmail}
+                            onChange={handleInputChange}
+                        />
                         <FaEnvelope className="inputIcon" />
                     </div>
                     <div className="inputGroup">
-                        <input type="text" id="lab" name="lab" required placeholder="Enter Lab/Hospital Name" />
+                        <input
+                            type="text"
+                            id="clinicName"
+                            name="clinicName"
+                            required
+                            placeholder="Enter Lab/Hospital Name"
+                            value={formData.clinicName}
+                            onChange={handleInputChange}
+                        />
                         <FaUser className="inputIcon" />
                     </div>
                     <div className="checkboxContainer">
-                        <input type="checkbox" id="marketing-consent" checked={isChecked} onChange={handleCheckboxChange} />
+                        <input
+                            type="checkbox"
+                            id="marketing-consent"
+                            checked={isChecked}
+                            onChange={handleCheckboxChange}
+                        />
                         <label className="marketing-consent">
-                            I allow ConversionLab to send me marketing emails and store my personal data.
+                            I allow Infinder to send me marketing emails and store my
+                            personal data.
                         </label>
                     </div>
-                    <button className='submit' type="submit" disabled={!isChecked}>Get my free audit</button>
+                    <button className="submit" type="submit" disabled={!isChecked || isSubmitting}>
+                        {isSubmitting ? "Submitting..." : "Get my free audit"}
+                    </button>
+                    {message && <p className="message">{message}</p>}
                 </form>
             </ModalContent>
         </ModalOverlay>
     );
 };
+
 
 const ModalOverlay = styled.div`
     position: fixed;
