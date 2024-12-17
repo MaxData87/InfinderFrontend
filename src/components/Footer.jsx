@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import icon1 from '../assets/images/Instagram.png'
 import icon2 from '../assets/images/Facebook.png'
-import icon3 from '../assets/images/Youtube.png'
+import icon3 from '../assets/images/YouTube.png'
 import logo from '../assets/images/infinder.png'
 
 const Footer = () => {
