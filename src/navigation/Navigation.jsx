@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import * as Pages from './index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../../Globalcss.css'
+import '../../globalcss.css'
 
 const Navigation = () => {
 
