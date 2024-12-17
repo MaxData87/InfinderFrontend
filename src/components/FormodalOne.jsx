@@ -161,138 +161,142 @@ const ModalContent = styled.div`
     background: #fff;
     padding: 2rem;
     border-radius: 8px;
-    width: 440px;
+    width: 90%; /* Default width for smaller screens */
+    max-width: 440px; /* Max width for larger screens */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    position: relative; /* Ensure child elements are positioned relative to this */
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
+    /* Logo and Avatar */
     .infinderLogo {
         height: auto;
-        width: 10rem;
+        width: 8rem; /* Adjusted for responsiveness */
+        margin: 0 auto;
     }
 
     .headBox {
         display: flex;
+        flex-direction: column;
         align-items: center;
+        text-align: center;
+
+        .heading {
+            font-family: "DM Serif Text", serif;
+            font-size: 28px; /* Smaller heading on mobile */
+            color: #2C3146;
+            text-align: center;
+        }
+
+        .AvatarPng {
+            width: 8rem;
+            height: auto;
+        }
     }
 
-    .heading {
-        font-family: "DM Serif Text", serif;
-        font-size: 36px;
-        color: #2C3146;
-    }
-
-    .AvatarPng {
-        height: auto;
-        width: 10rem;
-    }
-
+    /* Description */
     .desc {
         font-family: "DM Sans", sans-serif;
-        font-size: 16px;
+        font-size: 14px;
         color: #2C3146;
+        text-align: center;
     }
 
-    .form{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    form {
+    /* Form Styling */
+    .form {
         display: flex;
         flex-direction: column;
         gap: 1rem;
 
-        button {
-            font-family: "DM Sans", sans-serif;
-            font-size: 14px;
-            background-color: #007bff;
-            color: white;
-            padding: 0.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            &:disabled {
-                background-color: #ccc;
-                cursor: not-allowed;
-                color: black;
+        .inputGroup {
+            position: relative;
+
+            input {
+                width: 100%;
+                padding: 0.8rem;
+                padding-left: 2.5rem;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                outline: none;
+                background-color: #f0f0f0;
+            }
+
+            .inputIcon {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #2C3146;
             }
         }
     }
 
-    .inputGroup {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        position: relative;
-
-        input {
-            width: 100%;
-            padding: 0.8rem;
-            font-size: 14px;
-            border: none;
-            border-radius: 4px;
-            padding-left: 2.5rem;
-            box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #f0f0f0;
-            outline: none;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .inputIcon {
-            position: absolute;
-            left: 10px;
-            color: #2C3146;
-            font-size: 16px;
-            pointer-events: none;
-        }
-
-        input:focus {
-            box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(0, 0, 0, 0.15);
-        }
-
-        input::placeholder {
-            font-family: "DM Sans", sans-serif;
-            color: #2C3146;
-            font-size: 14px;
-            padding-left: 0.5rem;
-        }
-    }
-
+    /* Checkbox Container */
     .checkboxContainer {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        margin-top: 1rem;
+        font-size: 14px;
+        color: #2C3146;
     }
 
+    /* Submit Button */
+    .submit {
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            color: black;
+        }
+    }
+
+    /* Close Button */
     .closeButton {
-        position: absolute; /* Relative to the modal content */
-        top: 0px; /* Adjust as needed */
-        right: 10px; /* Adjust as needed */
+        position: absolute;
+        top: 10px;
+        right: 10px;
         background: none;
         border: none;
         font-size: 24px;
         color: #333;
         cursor: pointer;
-        transition: color 0.3s ease;
+        &:hover {
+            color: #f44336;
+        }
     }
 
-    .marketing-consent{
-        font-family: "DM Sans", sans-serif;
-        color: #2C3146;
-        font-size: 14px;
+    /* Responsive Design */
+    @media (min-width: 768px) {
+        width: 70%; /* Adjust modal width for tablets */
+        .headBox .heading {
+            font-size: 32px; /* Larger heading */
+        }
+        .desc {
+            font-size: 16px;
+        }
     }
 
-    .closeButton:hover {
-        color: #f44336;
+    @media (min-width: 1024px) {
+        width: 440px; /* Standard desktop modal width */
+        .headBox .heading {
+            font-size: 36px;
+        }
+        .desc {
+            font-size: 16px;
+        }
     }
 `;
+
 
 
 export default FormodalOne;
