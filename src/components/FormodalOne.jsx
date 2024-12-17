@@ -78,7 +78,7 @@ const FormodalOne = ({ isOpen, onClose }) => {
                 </button>
                 <img src={logo} alt="Logo" className="infinderLogo" />
                 <div className="headBox">
-                    <span className="heading">Get your free landing page audit now</span>
+                    <span className="headtxt">Get your free landing page audit now</span>
                     <img src={Avatar} alt="Avatar" className="AvatarPng" />
                 </div>
                 <span className="desc">
@@ -167,7 +167,7 @@ const ModalContent = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0rem;
 
     /* Logo and Avatar */
     .infinderLogo {
@@ -178,15 +178,16 @@ const ModalContent = styled.div`
 
     .headBox {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        text-align: center;
+        // text-align: center;
+        margin-top: 1px;
 
-        .heading {
+        .headtxt {
             font-family: "DM Serif Text", serif;
             font-size: 28px; /* Smaller heading on mobile */
             color: #2C3146;
-            text-align: center;
+            // text-align: center;
         }
 
         .AvatarPng {
@@ -276,19 +277,30 @@ const ModalContent = styled.div`
     }
 
     /* Responsive Design */
-    @media (min-width: 768px) {
+    @media (max-width: 768px) {
         width: 70%; /* Adjust modal width for tablets */
-        .headBox .heading {
-            font-size: 32px; /* Larger heading */
+ .headBox {
+ margin-top: 8px;
+        }
+        .headBox .headtxt {
+            font-size: 20px; /* Larger heading */
         }
         .desc {
-            font-size: 16px;
+            font-size: 12px;
+        }
+
+        .headBox .AvatarPng {
+            width: 6rem;
+        }
+        
+        .infinderLogo {
+        width: 6rem;
         }
     }
 
     @media (min-width: 1024px) {
         width: 440px; /* Standard desktop modal width */
-        .headBox .heading {
+        .headBox .headtxt {
             font-size: 36px;
         }
         .desc {
