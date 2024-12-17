@@ -159,35 +159,34 @@ const ModalOverlay = styled.div`
 
 const ModalContent = styled.div`
     background: #fff;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 8px;
-    width: 90%; /* Default width for smaller screens */
-    max-width: 440px; /* Max width for larger screens */
+    width: 95%; /* Better for mobile */
+    max-width: 440px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0rem;
+    gap: 1rem;
 
-    /* Logo and Avatar */
     .infinderLogo {
         height: auto;
-        width: 8rem; /* Adjusted for responsiveness */
-        margin: 0 auto;
+        width: 6rem; /* Responsive logo */
+        margin: 0 auto 0.5rem auto;
     }
 
     .headBox {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-        // text-align: center;
-        margin-top: 1px;
+        text-align: center;
+        gap: 0.5rem;
 
         .headtxt {
             font-family: "DM Serif Text", serif;
-            font-size: 28px; /* Smaller heading on mobile */
+            font-size: 22px; /* Adjusted for phones */
             color: #2C3146;
-            // text-align: center;
+            line-height: 1.3;
         }
 
         .AvatarPng {
@@ -196,32 +195,32 @@ const ModalContent = styled.div`
         }
     }
 
-    /* Description */
     .desc {
         font-family: "DM Sans", sans-serif;
-        font-size: 14px;
+        font-size: 12px;
         color: #2C3146;
         text-align: center;
+        margin-bottom: 1rem;
+        line-height: 1.4;
     }
 
-    /* Form Styling */
     .form {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.75rem;
 
         .inputGroup {
             position: relative;
 
             input {
                 width: 100%;
-                padding: 0.8rem;
-                padding-left: 2.5rem;
+                padding: 0.75rem 0.5rem 0.75rem 2.5rem;
                 font-size: 14px;
                 border: 1px solid #ccc;
-                border-radius: 4px;
+                border-radius: 6px;
                 outline: none;
                 background-color: #f0f0f0;
+                box-sizing: border-box; /* Prevents overflow */
             }
 
             .inputIcon {
@@ -234,25 +233,28 @@ const ModalContent = styled.div`
         }
     }
 
-    /* Checkbox Container */
     .checkboxContainer {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 14px;
+        font-size: 12px;
         color: #2C3146;
     }
 
-    /* Submit Button */
     .submit {
         font-family: "DM Sans", sans-serif;
-        font-size: 16px;
+        font-size: 14px;
         background-color: #007bff;
         color: white;
         padding: 0.75rem;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
+        transition: background 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #0056b3;
+        }
 
         &:disabled {
             background-color: #ccc;
@@ -261,7 +263,12 @@ const ModalContent = styled.div`
         }
     }
 
-    /* Close Button */
+    .message {
+        font-size: 12px;
+        color: green;
+        text-align: center;
+    }
+
     .closeButton {
         position: absolute;
         top: 10px;
@@ -276,38 +283,29 @@ const ModalContent = styled.div`
         }
     }
 
-    /* Responsive Design */
     @media (max-width: 768px) {
-        width: 70%; /* Adjust modal width for tablets */
- .headBox {
- margin-top: 8px;
-        }
-        .headBox .headtxt {
-            font-size: 20px; /* Larger heading */
-        }
-        .desc {
-            font-size: 12px;
-        }
+        padding: 1rem;
+        width: 90%;
 
+        .headBox .headtxt {
+            font-size: 18px;
+        }
         .headBox .AvatarPng {
-            width: 6rem;
+            width: 4rem;
         }
-        
         .infinderLogo {
-        width: 6rem;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        width: 440px; /* Standard desktop modal width */
-        .headBox .headtxt {
-            font-size: 36px;
+            width: 5rem;
         }
         .desc {
-            font-size: 16px;
+            font-size: 11px;
+        }
+        .submit {
+            font-size: 12px;
+            padding: 0.6rem;
         }
     }
 `;
+
 
 
 
