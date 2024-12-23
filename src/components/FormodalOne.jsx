@@ -76,14 +76,14 @@ const FormodalOne = ({ isOpen, onClose }) => {
                 <button className="closeButton" onClick={handleClose}>
                     &times;
                 </button>
-                <img src={logo} alt="Logo" className="infinderLogo" />
+                {/* <img src={logo} alt="Logo" className="infinderLogo" /> */}
                 <div className="headBox">
-                    <span className="headtxt">Get your free landing page audit now</span>
+                    <span className="headtxt">Join Us Today—Together, Let’s Transform Healthcare.</span>
                     <img src={Avatar} alt="Avatar" className="AvatarPng" />
                 </div>
-                <span className="desc">
-                    Send me your email and landing page URL and I will review it - no
-                    strings attached.
+                <span className="descForm1">
+                    Help us improve! Share your hospital details and participate in our
+                    survey to optimize healthcare services.
                 </span>
                 <form className="form" onSubmit={handleSubmit} method="post" action="#">
                     <div className="inputGroup">
@@ -195,7 +195,7 @@ const ModalContent = styled.div`
         }
     }
 
-    .desc {
+    .descForm1 {
         font-family: "DM Sans", sans-serif;
         font-size: 12px;
         color: #2C3146;
@@ -216,10 +216,9 @@ const ModalContent = styled.div`
                 width: 100%;
                 padding: 0.75rem 0.5rem 0.75rem 2.5rem;
                 font-size: 14px;
-                border: 1px solid #ccc;
-                border-radius: 6px;
+                border: none;
+                border-bottom: 2px solid #ccc;
                 outline: none;
-                background-color: #f0f0f0;
                 box-sizing: border-box; /* Prevents overflow */
             }
 
@@ -228,10 +227,14 @@ const ModalContent = styled.div`
                 left: 10px;
                 top: 50%;
                 transform: translateY(-50%);
-                color: #2C3146;
+                color: #000000;
             }
         }
     }
+
+    .inputGroup input::placeholder {
+    color: #000000; /* Replace with your desired color */
+}
 
     .checkboxContainer {
         display: flex;

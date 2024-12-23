@@ -22,10 +22,10 @@ const Footer = () => {
         <div className='boxOne'>
           <div className='boxTwo'>
             <div className='boxThree'>
-              <span className='title'>“Join Us Today—Together, Let’s Transform Healthcare.”</span>
+              {/* <span className='title'>“Join Us Today—Together, Let’s Transform Healthcare.”</span> */}
               <div className='contactBox'>
                 <span className='contact'>Email: support@infinder.com</span>
-                <span className='contact'>Phone: +91-98765-43210</span>
+                {/* <span className='contact'>Phone: +91-98765-43210</span> */}
                 <span className='contact'>Address: Infinder HQ, 123 Healthcare Street, New Delhi, India.</span>
               </div>
             </div>
@@ -41,7 +41,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <img className='footerLogo' src={logo} />
+          {/* <img className='footerLogo' src={logo} /> */}
         </div>
       </div>
     </FootComp>
